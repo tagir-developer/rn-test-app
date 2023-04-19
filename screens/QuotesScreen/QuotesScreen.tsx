@@ -47,13 +47,25 @@ function QuotesScreen({ navigation }: TypeHomeScreenProps) {
     },
   ];
 
+  const loading = !quotesStore.quotes.length;
+
+  if (quotesStore.errorMessage) {
+    return (
+      <View style={styles.container}>
+        <View>
+          <Text style={styles.errorMessage}>{quotesStore.errorMessage}</Text>
+        </View>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <Table
         title='Таблица котировок'
         data={quotesStore.quotes}
         columns={tableColumns}
-        loading={!Boolean(quotesStore.quotes.length)}
+        loading={loading}
       />
     </View>
   );
@@ -69,18 +81,18 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     marginBottom: 90,
   },
-  secondTitle: {
-    fontSize: 26,
-    color: '#585858',
-    textAlign: 'center',
-    marginBottom: 25,
-    marginTop: 10,
-  },
   paragraph: {
     fontSize: 18,
     color: '#151515',
     flex: 1,
     paddingHorizontal: 10,
+  },
+  errorMessage: {
+    textAlign: 'center',
+    color: '#be0202',
+    fontSize: 26,
+    marginTop: 20,
+    fontWeight: 'bold',
   },
 });
 
